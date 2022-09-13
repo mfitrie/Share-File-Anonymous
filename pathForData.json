@@ -1,0 +1,19 @@
+{
+    "status": true,
+    "data": {
+        "file": {
+            "url": {
+                "full": "https://anonfiles.com/C3h8Q870y5/data_json",
+                "short": "https://anonfiles.com/C3h8Q870y5"
+            },
+            "metadata": {
+                "id": "C3h8Q870y5",
+                "name": "data.json",
+                "size": {
+                    "bytes": 487,
+                    "readable": "487 B"
+                }
+            }
+        }
+    }
+}
