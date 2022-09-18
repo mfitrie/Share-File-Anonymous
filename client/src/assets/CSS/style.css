@@ -114,6 +114,106 @@ body{
     padding-top: 1rem;
 }
 
+.sectionOne__boxData .sectionOne__progressFile{
+    display: none;
+}
+
+
+
+.sectionOne__boxData--active{
+    display: grid;
+    grid-template-rows: 100%;
+    justify-items: center;
+}
+
+.sectionOne__boxData--active 
+.sectionOne__bigTextNo,
+.sectionOne__boxData--active 
+.sectionOne__smallTextProgress
+{
+    display: none;
+}
+
+.sectionOne__boxData--active .sectionOne__progressFile{
+    display: grid;
+    grid-template-rows: 70% 30%;
+    justify-content: center;
+}
+
+
+.sectionOne__progressOne{
+    margin-top: 2.5rem;
+    /* background-color: aqua; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-items: center;
+}
+
+.sectionOne__progressOne object{
+    /* background-color: #E74C3C; */
+    width: 8rem;
+    height: 8rem;
+}
+
+.sectionOne__progressPlace{
+    /* background-color: #01BD1D; */
+    display: grid;
+    grid-template-rows: 50% 50%;
+    gap: 0.3rem;
+}
+
+.sectionOne__fileName{
+    font-size: 1.5rem;
+}
+
+
+
+.sectionOne__progressButton{
+    margin-top: auto;
+    margin-bottom: auto;
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.sectionOne__btnRemove,
+.sectionOne__btnUpload
+{
+    height: 3rem;
+    width: 8rem;
+    border: 1px solid #000;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.sectionOne__btnRemove{
+    background-color: #E74C3C;
+}
+
+.sectionOne__btnUpload{
+    background-color: #01BD1D;
+}
+
+.sectionOne__btnRemove:hover{
+    background-color: #d62c1a;
+    transition: 0.2s ease-in-out;
+}
+
+
+.sectionOne__btnUpload:hover{
+    background-color: #018a15;
+    transition: 0.2s ease-in-out;
+}
+
+
+
+
+
 .sectionOne__boxDrop,
 .sectionOne__boxData{
     border: 1px solid #000;

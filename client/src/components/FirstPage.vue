@@ -20,9 +20,23 @@
                     <span class="sectionOne__bigTextDrag">Drag & Drop</span>
                     <span class="sectionOne__smallText">your files here.</span>
                 </div>
-                <div class="sectionOne__boxData">
+                <div :class="filesExist">
+                <!-- <div class="sectionOne__boxData  sectionOne__boxData--active"> -->
                     <span class="sectionOne__bigTextNo">No Data Yet</span>
                     <span class="sectionOne__smallTextProgress">We will show the progress here</span>
+                    <div class="sectionOne__progressFile">
+                        <div class="sectionOne__progressOne">
+                            <object class="sectionOne__fileLogo" :data="icon[3]" type=""></object>
+                            <div class="sectionOne__progressPlace">
+                                <span class="sectionOne__fileName">{{filesName}}</span>
+                                <span class="sectionOne__fileProgressIndicator">Completed</span>
+                            </div>
+                        </div>
+                        <div class="sectionOne__progressButton">
+                            <button @click="removeFile()" class="sectionOne__btnRemove">Remove</button>
+                            <button @click="uploadFile()" class="sectionOne__btnUpload">Upload</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -30,6 +44,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'FirstPage',
     data() {
@@ -38,8 +53,10 @@ export default {
                 require('@/assets/Icon/anonymous-iconsvg.svg'),
                 require('@/assets/Icon/cloud-icon.svg'),
                 require('@/assets/Icon/cloud-done.svg'),
+                require('@/assets/Icon/files-icon.svg')
             ],
-            files: []
+            files: [],
+            classBoxData: ['sectionOne__boxData','sectionOne__boxData--active']
         }
     },
     methods: {
@@ -54,11 +71,56 @@ export default {
             });
 
             console.log(`The files count is ${this.files.length}`);
+            console.log(this.files[0]);
         },
-        removeFile(file){
-            this.files = this.files.filter(f=>{
-                return f != file;
-            });
+        removeFile(){
+            // this.files = this.files.filter(f=>{
+            //     return f != file;
+            // });
+            if(this.files[0]){
+                this.files.pop();
+                console.log(`File has successfully deleted.`);
+                console.log(`The file count is: ${this.files.length ?? 0}`);
+            }else{
+                console.log('No files in list');
+            }
+
+
+        },
+        uploadFile(){
+            if(!this.files){
+                return;
+            }
+
+
+            const objectURL = URL.createObjectURL(this.files[0]);
+            console.log(objectURL);
+
+            const anchor = document.createElement('a');
+            anchor.href = objectURL;
+            anchor.download = 'data_json';
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+
+            URL.revokeObjectURL(this.files[0]);
+        }
+    },
+    computed: {
+        filesExist(){
+            if(this.files[0]){
+                // return true;
+                return `${this.classBoxData[0]} ${this.classBoxData[1]}`
+            }else{
+                // return false;
+                return `${this.classBoxData[0]}`;
+            }
+        },
+        filesName(){
+            if(this.files){
+                return this.files[0] ? this.files[0].name : 'No files';
+            }
+            return '';
         }
     },
 }
