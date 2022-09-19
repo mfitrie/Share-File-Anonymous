@@ -22,11 +22,12 @@
                 </div>
                 <div :class="filesExist">
                 <!-- <div class="sectionOne__boxData  sectionOne__boxData--active"> -->
+                <!-- <div class="sectionOne__boxData  sectionOne__boxData--complete"> -->
                     <span class="sectionOne__bigTextNo">No Data Yet</span>
                     <span class="sectionOne__smallTextProgress">We will show the progress here</span>
                     <div class="sectionOne__progressFile">
                         <div class="sectionOne__progressOne">
-                            <object class="sectionOne__fileLogo" :data="icon[3]" type=""></object>
+                            <object class="sectionOne__fileLogo" :data="icon[3]" type="image/svg+xml"></object>
                             <div class="sectionOne__progressPlace">
                                 <span class="sectionOne__fileName">{{filesName}}</span>
                                 <span class="sectionOne__fileProgressIndicator">Completed</span>
@@ -36,6 +37,10 @@
                             <button @click="removeFile()" class="sectionOne__btnRemove">Remove</button>
                             <button @click="uploadFile()" class="sectionOne__btnUpload">Upload</button>
                         </div>
+                    </div>
+                    <div class="sectionOne__completeProgress">
+                        <object class="sectionOne__completeIcon" :data="icon[2]" type="image/svg+xml"></object>
+                        <span class="sectionOne__captionComplete">Done</span>
                     </div>
                 </div>
             </div>
@@ -56,7 +61,8 @@ export default {
                 require('@/assets/Icon/files-icon.svg')
             ],
             files: [],
-            classBoxData: ['sectionOne__boxData','sectionOne__boxData--active']
+            classBoxData: ['sectionOne__boxData','sectionOne__boxData--active','sectionOne__boxData--complete'],
+            isDownloadFinish: false
         }
     },
     methods: {
@@ -96,21 +102,30 @@ export default {
             const objectURL = URL.createObjectURL(this.files[0]);
             console.log(objectURL);
 
+            this.isDownloadFinish = true;
+
             const anchor = document.createElement('a');
             anchor.href = objectURL;
             anchor.download = 'data_json';
             document.body.appendChild(anchor);
             anchor.click();
+
             document.body.removeChild(anchor);
 
             URL.revokeObjectURL(this.files[0]);
+
+
         }
     },
     computed: {
         filesExist(){
             if(this.files[0]){
-                // return true;
-                return `${this.classBoxData[0]} ${this.classBoxData[1]}`
+                if(this.isDownloadFinish){
+                    console.log(this.files.length);
+                    return `${this.classBoxData[0]} ${this.classBoxData[2]}`
+                }else{
+                    return `${this.classBoxData[0]} ${this.classBoxData[1]}`
+                }
             }else{
                 // return false;
                 return `${this.classBoxData[0]}`;
@@ -123,6 +138,16 @@ export default {
             return '';
         }
     },
+    watch: {
+        isDownloadFinish(newValue){
+            if(newValue){
+                setTimeout(() => {
+                    this.files = [];
+                    this.isDownloadFinish = false;
+                }, 1500);
+            }
+        },
+    }
 }
 </script>
 

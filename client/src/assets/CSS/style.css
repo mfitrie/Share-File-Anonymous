@@ -118,8 +118,12 @@ body{
     display: none;
 }
 
+.sectionOne__boxData .sectionOne__completeProgress{
+    display: none;
+}
 
 
+/*****boxData active*****/
 .sectionOne__boxData--active{
     display: grid;
     grid-template-rows: 100%;
@@ -166,8 +170,6 @@ body{
     font-size: 1.5rem;
 }
 
-
-
 .sectionOne__progressButton{
     margin-top: auto;
     margin-bottom: auto;
@@ -209,6 +211,60 @@ body{
     background-color: #018a15;
     transition: 0.2s ease-in-out;
 }
+
+/*****boxData active*****/
+
+
+.sectionOne__boxData--complete
+.sectionOne__bigTextNo,
+.sectionOne__boxData--complete 
+.sectionOne__smallTextProgress
+{
+    display: none;
+}
+
+.sectionOne__boxData--complete{
+    /* background-color: yellow; */
+    display: grid;
+    grid-template-rows: 100%;
+    /* transition: all 1s ease-in-out; */
+
+    
+}
+
+
+.sectionOne__boxData--complete .sectionOne__completeProgress{
+    height: 70%;
+    /* background-color: aqua; */
+    display: grid;
+    grid-template-rows: 80% 20%;
+    justify-items: center;
+
+    animation-duration: 0.5s;
+    animation-name: animate-fade;
+    animation-delay: 0.5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes animate-fade {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.sectionOne__completeIcon{
+    /* background-color: #E74C3C; */
+    width: 14rem;
+    height: 14rem;
+}
+
+.sectionOne__captionComplete{
+    /* background-color: #01BD1D; */
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #707070;
+}
+
+
 
 
 
