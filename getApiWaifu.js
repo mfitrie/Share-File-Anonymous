@@ -6,10 +6,10 @@ const axios = require("axios").default;
 const data = axios.get("https://api.waifu.im/random");
 
 data
-.then(res =>{
+.then((res) =>{
     // writeFile(res.data);
+    // console.log(res.data);
 });
-
 
 const writeFile = async (data)=>{
     try {
@@ -37,4 +37,4 @@ const readFile = async()=>{
     }
 }
 
-readFile();
+// readFile();

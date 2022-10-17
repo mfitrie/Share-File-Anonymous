@@ -1,1 +1,26 @@
-{"images":[{"file":"5f507ff17ec8a75e","extension":".jpg","image_id":7096,"favourites":1,"dominant_color":"#424040","source":"https://twitter.com/nam07_sj/status/1460075450407948291","uploaded_at":"2021-11-15T11:59:12.148991+00:00","is_nsfw":false,"width":2644,"height":4096,"url":"https://cdn.waifu.im/5f507ff17ec8a75e.jpg","preview_url":"https://waifu.im/preview/5f507ff17ec8a75e/","tags":[{"tag_id":12,"name":"waifu","description":"A female anime/manga character.","is_nsfw":false}]}]}
+{
+    "images": [
+        {
+            "file": "5f507ff17ec8a75e",
+            "extension": ".jpg",
+            "image_id": 7096,
+            "favourites": 1,
+            "dominant_color": "#424040",
+            "source": "https://twitter.com/nam07_sj/status/1460075450407948291",
+            "uploaded_at": "2021-11-15T11:59:12.148991+00:00",
+            "is_nsfw": false,
+            "width": 2644,
+            "height": 4096,
+            "url": "https://cdn.waifu.im/5f507ff17ec8a75e.jpg",
+            "preview_url": "https://waifu.im/preview/5f507ff17ec8a75e/",
+            "tags": [
+                {
+                    "tag_id": 12,
+                    "name": "waifu",
+                    "description": "A female anime/manga character.",
+                    "is_nsfw": false
+                }
+            ]
+        }
+    ]
+}
