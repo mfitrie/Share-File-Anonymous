@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import Toastify from 'toastify-js';
 
 export default {
     name: 'FirstPage',
@@ -90,8 +91,6 @@ export default {
             }else{
                 console.log('No files in list');
             }
-
-
         },
         uploadFile(){
             if(!this.files){
@@ -114,8 +113,13 @@ export default {
 
             URL.revokeObjectURL(this.files[0]);
 
-
-        }
+        },
+        alertToastify(){
+            Toastify({
+                text: "This is a toast",
+                duration: 3000
+                }).showToast();
+            }
     },
     computed: {
         filesExist(){
@@ -155,4 +159,5 @@ export default {
 <style>
     @import '../assets/CSS/style.css';
     @import '../assets/CSS/media-queries.css';
+    @import "toastify-js/src/toastify.css";
 </style>
