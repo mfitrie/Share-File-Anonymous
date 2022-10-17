@@ -53,6 +53,10 @@ body{
     cursor: pointer;
 }
 
+a{
+    color: #000;
+}
+
 .sectionOne{
     background-color: #EEEEEE;
     display: flex;

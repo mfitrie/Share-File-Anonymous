@@ -1,6 +1,6 @@
 <template>
-    <div class="firstPage">
-        <header class="headerPage">
+    <!-- <div class="firstPage"> -->
+        <!-- <header class="headerPage">
             <div class="headerPage__caption">
                 <object class="headerPage__logo" :data="icon[0]" type="image/svg+xml"></object>
                 <div class="headerPage__name">Share Anonymous</div>
@@ -11,7 +11,7 @@
                     <li class="headerPage__item">Retrieve files</li>
                 </ul>
             </div>
-        </header>
+        </header> -->
 
         <section class="sectionOne">
             <div class="sectionOne__largeBox" @drop.prevent="addFile" @dragover.prevent>
@@ -45,14 +45,14 @@
                 </div>
             </div>
         </section>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script>
 import Toastify from 'toastify-js';
 
 export default {
-    name: 'FirstPage',
+    name: 'UploadFiles',
     data() {
         return {
             icon: [
@@ -158,6 +158,5 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
     @import '../assets/CSS/style.css';
-    @import '../assets/CSS/media-queries.css';
     @import "toastify-js/src/toastify.css";
 </style>
