@@ -4,6 +4,17 @@ module.exports = defineConfig({
   lintOnSave: false,
   publicPath: '',
   devServer: {
-    proxy: 'https://anonfiles.com/',
+    // proxy: 'https://anonfiles.com/',
+    proxy: {
+      '/download': {
+        target: 'https://anonfiles.com/',
+        pathRewrite: {'^/download' : ''}
+      },
+      '/api': {
+        target: 'https://api.anonfiles.com/v2/file/',
+        changeOrigin: true,
+        pathRewrite: {'^/api' : ''}
+      },
+    }
   }
 })

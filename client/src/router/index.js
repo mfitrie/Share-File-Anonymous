@@ -8,14 +8,19 @@ const routes = [
     name: 'uploadFiles',
     component: RetrieveFiles
   },
+  // {
+  //   path: '/retrieveFiles',
+  //   name: 'retrieveFiles',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/RetrieveFiles.vue')
+  // },
   {
     path: '/retrieveFiles',
     name: 'retrieveFiles',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/RetrieveFiles.vue')
-  }
+    component: RetrieveFiles
+  },
 ]
 
 const router = createRouter({
@@ -23,4 +28,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;

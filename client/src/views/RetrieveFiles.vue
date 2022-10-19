@@ -3,12 +3,12 @@
       <div class="sectionTwo__container">
         <span class="sectionTwo__Title">Retrieve Files</span>
         <div class="sectionTwo__InputContainer">
-          <input class="sectionTwo__searchInput" type="text" placeholder="Enter you file id" v-model="fileIdData" @keyup.enter="searchFile">
-          <object class="sectionTwo__iconSearch" :data="icon[0]" type="image/svg+xml"></object>
+          <input class="sectionTwo__searchInput" type="text" placeholder="Enter you file id" v-model="InputFileId" @keyup.enter="searchFile">
+          <Icon icon="ic:sharp-search" class="sectionTwo__iconSearch" @click="searchFile"></Icon>
         </div>
         <div class="sectionTwo__FileContainer">
-          <span class="sectionTwo__FileName">File name - Size 1 kb</span>
-            <object @click="onClick" class="sectionTwo__iconDownload" :data="icon[1]" type="image/svg+xml"></object>
+          <span class="sectionTwo__FileName">{{displayFileDescription}}</span>
+            <Icon icon="ic:baseline-download-for-offline" :class="showAndHideDownloadIcon()" @click="downloadFile"></Icon>
         </div>
       </div>
     </section>
@@ -17,30 +17,61 @@
 <script setup>
   import {ref} from 'vue';
   import axios from 'axios';
+  import {Icon} from '@iconify/vue';
+  import Toastify from 'toastify-js' 
 
-  const icon = ref([
-    require('../assets/Icon/search_icon.svg'), 
-    require('../assets/Icon/download-icon.svg')
-  ]);
-  const fileIdData = ref('');
+  const InputFileId = ref('');
+  const fileMetadata = ref({
+    id: '',
+    name: '',
+    size: '',
+  });
+  const isIconDownload = ref(false);
+  const displayFileDescription = ref('No file searched!');
 
   const searchFile = async ()=>{
-    console.log(`File is: ${fileIdData.value}`);
-    
+    // C3h8Q870y5
     try {
-      // const fileMetadata = await axios.get(`https://api.anonfiles.com/v2/file/C3h8Q870y5/info`);
+      const getFileInfo = await axios.get(`/api/${InputFileId.value}/info`);
+      alertToastify('File found!', '#2ecc71');
 
-      const getFileData = await axios.get(`http://localhost:8080/${fileIdData.value}`);
+      fileMetadata.value.id = getFileInfo.data.data.file.metadata.id; 
+      fileMetadata.value.name = getFileInfo.data.data.file.metadata.name;
+      fileMetadata.value.size = getFileInfo.data.data.file.metadata.size.readable;
+
+      console.log(fileMetadata.value.id, fileMetadata.value.name, fileMetadata.value.size);
+
+      displayFileDescription.value = `${fileMetadata.value.name} - Size ${fileMetadata.value.size}`;
+      isIconDownload.value = true;
+
+    } catch (error) {
+      // console.log(error);
+      if(error.response.status === 0){
+        console.log('CORS problem');
+      }
+      if(error.response.status === 404){
+        console.log('Not found');
+        isIconDownload.value = false;
+        alertToastify('File not found', '#e74c3c');
+      }
+    }
+    
+  }
+
+  const downloadFile = async ()=>{
+    try {
+      const getFileData = await axios.get(`/download/${InputFileId.value}`);
+
       const URL_Data = getFileData.data.split('href')[8].split('"')[1];
 
       const anchor = document.createElement('a');
       anchor.href = URL_Data;
-      anchor.download = 'data_json';
+      anchor.download = fileMetadata.value.name;
       document.body.appendChild(anchor);
       anchor.click();
 
       document.body.removeChild(anchor);
-
+      
     } catch (error) {
       // console.log(error);
       if(error.response.status === 0){
@@ -50,13 +81,30 @@
         console.log('Not found');
       }
     }
-    
-    fileIdData.value = '';
   }
 
-  const onClick = ()=>{
-    console.log('Hello');
+
+  const showAndHideDownloadIcon = ()=>{
+    if(isIconDownload.value){
+      return 'sectionTwo__iconDownload sectionTwo__iconDownload--active'
+    }
+
+    if(!isIconDownload.value){
+      return 'sectionTwo__iconDownload'
+    }
   }
+
+  const alertToastify = (message, colorHex)=>{
+    Toastify({
+        text: message,
+        className: "info",
+        style: {
+          background: colorHex,
+        }
+      }).showToast();
+  }
+
+
 </script>
 
 <style lang="scss">
@@ -108,8 +156,9 @@
           position: absolute;
           display: block;
           left: 77%;
-          width: 1.2rem;
-          height: 1.2rem;
+          width: 1.5rem;
+          height: 1.5rem;
+          cursor: pointer;
         }
 
       }
@@ -129,9 +178,15 @@
       }
 
       .sectionTwo__iconDownload{
+        display: none;
         width: 2rem;
         height: 2rem;
         cursor: pointer;
+        color: #2980b9;
+      }
+
+      .sectionTwo__iconDownload--active{
+        display: block;
       }
 
     }
