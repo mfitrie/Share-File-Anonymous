@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   lintOnSave: false,
-  publicPath: '',
+  publicPath: process.env.PUBLIC_URL || '/',
   devServer: {
     // proxy: 'https://anonfiles.com/',
     proxy: {
