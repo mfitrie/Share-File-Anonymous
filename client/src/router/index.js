@@ -5,7 +5,7 @@ import RetrieveFiles from '../views/RetrieveFiles.vue';
 const routes = [
   {
     path: '/',
-    name: 'uploadFiles',
+    name: 'Upload Files',
     component: UploadFiles
   },
   // {
@@ -18,7 +18,7 @@ const routes = [
   // },
   {
     path: '/retrieveFiles',
-    name: 'retrieveFiles',
+    name: 'Retrieve Files',
     component: RetrieveFiles
   },
   // catch all 404
@@ -32,9 +32,14 @@ const router = createRouter({
   routes
 });
 
-// router.beforeEach((to, from, next)=>{
-//   console.log(from);
-//   next();
-// });
+router.beforeEach((to, from, next)=>{
+  console.log('From');
+  console.log(from);
+  console.log('To');
+  console.log(to);
+  
+  document.title = `${process.env.VUE_APP_TITLE } - ${to.name}`
+  next();
+});
 
 export default router;
