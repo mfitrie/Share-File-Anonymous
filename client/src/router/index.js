@@ -6,7 +6,7 @@ const routes = [
   {
     path: '/',
     name: 'uploadFiles',
-    component: RetrieveFiles
+    component: UploadFiles
   },
   // {
   //   path: '/retrieveFiles',

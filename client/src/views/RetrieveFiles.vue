@@ -5,6 +5,10 @@
         <div class="sectionTwo__InputContainer">
           <input class="sectionTwo__searchInput" type="text" placeholder="Enter you file id" v-model="InputFileId" @keyup.enter="searchFile">
           <Icon icon="ic:sharp-search" class="sectionTwo__iconSearch" @click="searchFile"></Icon>
+          <RotateSquare2 
+            :class="showAndHideSpinnerLoading()" 
+            style="position: absolute; left: 84%;"
+          ></RotateSquare2>
         </div>
         <div class="sectionTwo__FileContainer">
           <span class="sectionTwo__FileName">{{displayFileDescription}}</span>
@@ -18,7 +22,8 @@
   import {ref} from 'vue';
   import axios from 'axios';
   import {Icon} from '@iconify/vue';
-  import Toastify from 'toastify-js' 
+  import Toastify from 'toastify-js';
+  import {RotateSquare2} from 'vue-loading-spinner';
 
   const InputFileId = ref('');
   const fileMetadata = ref({
@@ -26,13 +31,17 @@
     name: '',
     size: '',
   });
+  const isLoading = ref(false);
   const isIconDownload = ref(false);
   const displayFileDescription = ref('No file searched!');
 
   const searchFile = async ()=>{
     // C3h8Q870y5
     try {
+      isLoading.value = true;
       const getFileInfo = await axios.get(`/api/${InputFileId.value}/info`);
+      isLoading.value = false;
+
       alertToastify('File found!', '#2ecc71');
 
       fileMetadata.value.id = getFileInfo.data.data.file.metadata.id; 
@@ -45,6 +54,7 @@
       isIconDownload.value = true;
 
     } catch (error) {
+      isLoading.value = false;
       // console.log(error);
       if(error.response.status === 0){
         console.log('CORS problem');
@@ -61,9 +71,9 @@
   const downloadFile = async ()=>{
     try {
       const getFileData = await axios.get(`/download/${InputFileId.value}`);
-
       const URL_Data = getFileData.data.split('href')[8].split('"')[1];
-
+      alertToastify('File starting to download!', '#2ecc71');
+      
       const anchor = document.createElement('a');
       anchor.href = URL_Data;
       anchor.download = fileMetadata.value.name;
@@ -72,6 +82,7 @@
 
       document.body.removeChild(anchor);
       
+
     } catch (error) {
       // console.log(error);
       if(error.response.status === 0){
@@ -83,6 +94,16 @@
     }
   }
 
+
+  const showAndHideSpinnerLoading = ()=>{
+    if(isLoading.value){
+      return 'sectionTwo__spinner sectionTwo__spinner--active'
+    }
+
+    if(!isLoading.value){
+      return 'sectionTwo__spinner'
+    }
+  }
 
   const showAndHideDownloadIcon = ()=>{
     if(isIconDownload.value){
@@ -116,7 +137,7 @@
     background-color: #EEEEEE;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
 
     &__container{
       background-color: #fff;
@@ -161,6 +182,10 @@
           cursor: pointer;
         }
 
+        .sectionTwo__spinner--active{
+          display: block;
+        }
+
       }
 
       .sectionTwo__FileContainer{
@@ -182,10 +207,23 @@
         width: 2rem;
         height: 2rem;
         cursor: pointer;
-        color: #2980b9;
+        color: #3498db;
+
+        &:hover{
+          color: #2980b9;
+          transition: 0.3s ease-in-out;
+        }
       }
 
       .sectionTwo__iconDownload--active{
+        display: block;
+      }
+
+      .sectionTwo__spinner{
+        display: none;
+      }
+
+      .sectionTwo__spinner--active{
         display: block;
       }
 
