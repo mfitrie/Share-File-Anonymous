@@ -4,7 +4,7 @@
         <span class="sectionTwo__Title">Retrieve Files</span>
         <div class="sectionTwo__InputContainer">
           <input class="sectionTwo__searchInput" type="text" placeholder="Enter you file id" v-model="InputFileId" @keyup.enter="searchFile">
-          <Icon icon="ic:sharp-search" class="sectionTwo__iconSearch" @click="searchFile"></Icon>
+          <Icon icon="ic:sharp-search" class="sectionTwo__iconSearch" title="Search file" @click="searchFile"></Icon>
           <RotateSquare2 
             :class="showAndHideSpinnerLoading()" 
             style="position: absolute; left: 84%;"
@@ -12,7 +12,7 @@
         </div>
         <div class="sectionTwo__FileContainer">
           <span class="sectionTwo__FileName">{{displayFileDescription}}</span>
-            <Icon icon="ic:baseline-download-for-offline" :class="showAndHideDownloadIcon()" @click="downloadFile"></Icon>
+            <Icon icon="ic:baseline-download-for-offline" :class="showAndHideDownloadIcon()" title="Download File" @click="downloadFile"></Icon>
         </div>
       </div>
     </section>

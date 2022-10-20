@@ -50,6 +50,8 @@
 
 <script>
 import Toastify from 'toastify-js';
+import axios from 'axios';
+import FormData from 'form-data';
 
 export default {
     name: 'UploadFiles',
@@ -67,7 +69,7 @@ export default {
         }
     },
     methods: {
-        addFile(e){
+        async addFile(e){
             // console.log(e);
             let droppedFiles = [...e.dataTransfer.files];
 
@@ -79,6 +81,7 @@ export default {
 
             console.log(`The files count is ${this.files.length}`);
             console.log(this.files[0]);
+            
         },
         removeFile(){
             // this.files = this.files.filter(f=>{
@@ -98,26 +101,53 @@ export default {
             }
 
 
-            const objectURL = URL.createObjectURL(this.files[0]);
-            console.log(objectURL);
+            // const objectURL = URL.createObjectURL(this.files[0]);
+            // console.log(objectURL);
 
             this.isDownloadFinish = true;
 
-            const anchor = document.createElement('a');
-            anchor.href = objectURL;
-            anchor.download = 'data_json';
-            document.body.appendChild(anchor);
-            anchor.click();
+            // const anchor = document.createElement('a');
+            // anchor.href = objectURL;
+            // anchor.download = 'data_json';
+            // document.body.appendChild(anchor);
+            // anchor.click();
 
-            document.body.removeChild(anchor);
+            // document.body.removeChild(anchor);
 
-            URL.revokeObjectURL(this.files[0]);
+            // URL.revokeObjectURL(this.files[0]);
+
+
+
+            this.postFileToAPI(this.files[0], this.files[0].name)
 
         },
-        alertToastify(){
+        async postFileToAPI(file, fileName){
+            try {
+                const form = new FormData();
+                form.append('file', file);
+                const postData = await axios.post('/api/1/upload', form, {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                });
+    
+                console.log(postData.data);
+                const fileIdAfterSubmit = postData.data.data.file.metadata.id;
+                console.log(fileIdAfterSubmit);
+
+                this.alertToastify(`File ${fileName}, id ${fileIdAfterSubmit} has successfully uploaded!`, '#2ecc71');
+
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        alertToastify(message, colorHex){
             Toastify({
-                text: "This is a toast",
-                duration: 3000
+                text: message,
+                duration: 3000,
+                style: {
+                    background: colorHex,
+                }
                 }).showToast();
             }
     },
