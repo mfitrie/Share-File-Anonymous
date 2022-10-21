@@ -1,18 +1,4 @@
 <template>
-    <!-- <div class="firstPage"> -->
-        <!-- <header class="headerPage">
-            <div class="headerPage__caption">
-                <object class="headerPage__logo" :data="icon[0]" type="image/svg+xml"></object>
-                <div class="headerPage__name">Share Anonymous</div>
-            </div>
-            <div class="headerPage__others">
-                <ul class="headerPage__list">
-                    <li class="headerPage__item">Upload files</li>
-                    <li class="headerPage__item">Retrieve files</li>
-                </ul>
-            </div>
-        </header> -->
-
         <section class="sectionOne">
             <div class="sectionOne__largeBox" @drop.prevent="addFile" @dragover.prevent>
                 <div class="sectionOne__boxDrop">
@@ -45,7 +31,6 @@
                 </div>
             </div>
         </section>
-    <!-- </div> -->
 </template>
 
 <script>
@@ -70,7 +55,6 @@ export default {
     },
     methods: {
         async addFile(e){
-            // console.log(e);
             let droppedFiles = [...e.dataTransfer.files];
 
             if(!droppedFiles) return;
@@ -79,14 +63,12 @@ export default {
                 this.files.push(el);
             });
 
-            console.log(`The files count is ${this.files.length}`);
-            console.log(this.files[0]);
+            // console.log(`The files count is ${this.files.length}`);
+            // console.log(this.files[0]);
             
         },
+
         removeFile(){
-            // this.files = this.files.filter(f=>{
-            //     return f != file;
-            // });
             if(this.files[0]){
                 this.files.pop();
                 console.log(`File has successfully deleted.`);
@@ -95,32 +77,15 @@ export default {
                 console.log('No files in list');
             }
         },
+
         uploadFile(){
             if(!this.files){
                 return;
             }
-
-
-            // const objectURL = URL.createObjectURL(this.files[0]);
-            // console.log(objectURL);
-
             this.isDownloadFinish = true;
-
-            // const anchor = document.createElement('a');
-            // anchor.href = objectURL;
-            // anchor.download = 'data_json';
-            // document.body.appendChild(anchor);
-            // anchor.click();
-
-            // document.body.removeChild(anchor);
-
-            // URL.revokeObjectURL(this.files[0]);
-
-
-
             this.postFileToAPI(this.files[0], this.files[0].name)
-
         },
+
         async postFileToAPI(file, fileName){
             try {
                 const form = new FormData();
@@ -131,16 +96,17 @@ export default {
                     }
                 });
     
-                console.log(postData.data);
+                // console.log(postData.data);
                 const fileIdAfterSubmit = postData.data.data.file.metadata.id;
-                console.log(fileIdAfterSubmit);
+                // console.log(fileIdAfterSubmit);
 
-                this.alertToastify(`File ${fileName}, id ${fileIdAfterSubmit} has successfully uploaded!`, '#2ecc71');
+                this.toastifyClickable(`File ${fileName}, ID: ${fileIdAfterSubmit} has successfully uploaded!.\n Please save the ID for retrieval.`, '#2ecc71');
 
             } catch (error) {
                 console.log(error);
             }
         },
+
         alertToastify(message, colorHex){
             Toastify({
                 text: message,
@@ -149,7 +115,18 @@ export default {
                     background: colorHex,
                 }
                 }).showToast();
-            }
+        },
+
+        toastifyClickable(message, colorHex){
+            Toastify({
+                text: message,
+                duration: 1000*60,
+                close: true,
+                style: {
+                    background: colorHex,
+                },
+            }).showToast();
+        }
     },
     computed: {
         filesExist(){
@@ -188,5 +165,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
     @import '../assets/CSS/style.css';
+    @import '../assets/CSS/media-queries.css';
     @import "toastify-js/src/toastify.css";
 </style>

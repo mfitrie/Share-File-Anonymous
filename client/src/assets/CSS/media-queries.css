@@ -1,0 +1,26 @@
+@media screen and (min-width: 1920px) {
+    .sectionOne__boxData{
+        /* background-color: yellow; */
+    }
+
+    .sectionOne__largeBox{
+        grid-template-columns: 32rem 32rem;
+    }
+
+    .sectionOne__logo{
+        margin-top: 7rem;
+        width: 10rem;
+        height: 10rem;
+    }
+
+    .sectionOne__bigTextDrag,
+    .sectionOne__bigTextNo{
+        font-size: 2.5rem
+    }
+
+    .sectionOne__smallText,
+    .sectionOne__smallTextProgress{
+        font-size: 1.3rem;
+    }
+
+}

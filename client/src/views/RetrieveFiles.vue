@@ -156,6 +156,12 @@
         padding-top: 7rem;
       }
 
+      @media screen and (min-width: 1920px) {
+        .sectionTwo__Title{
+            padding-top: 12rem;
+        }
+      }
+
       .sectionTwo__InputContainer{
         // background-color: aqua;
         display: flex;
@@ -230,5 +236,6 @@
     }
 
   }
+
 
 </style>
